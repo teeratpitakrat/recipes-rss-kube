@@ -60,8 +60,10 @@ public class BaseJettyServer implements Closeable {
 
         final int port   = ConfigurationManager.getConfigInstance().getInt(RSSConstants.JETTY_HTTP_PORT, Integer.MIN_VALUE);
 
+        String webappsDir = BaseJettyServer.class.getResource("/webapp").toExternalForm();
+
         final Context context = new Context(jettyServer, "/", Context.SESSIONS);
-        context.setResourceBase(RSSConstants.WEBAPPS_DIR);
+        context.setResourceBase(webappsDir);
         context.setClassLoader(Thread.currentThread().getContextClassLoader());
         context.addServlet(JspServlet.class, "*.jsp");
 
