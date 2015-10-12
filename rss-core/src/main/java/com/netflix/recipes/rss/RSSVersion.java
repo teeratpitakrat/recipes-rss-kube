@@ -1,9 +1,9 @@
 package com.netflix.recipes.rss;
 
 public class RSSVersion {
-	private static String version = "0.2";
+	private final static String RSS_VERSION = "0.3";
 	
 	public static String getVersion() {
-		return RSSVersion.version;
+		return RSSVersion.RSS_VERSION;
 	}
 }
