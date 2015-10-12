@@ -46,7 +46,9 @@ import com.netflix.recipes.rss.RSS;
 import com.netflix.recipes.rss.RSSConstants;
 import com.netflix.recipes.rss.RSSItem;
 import com.netflix.recipes.rss.RSSStore;
+import com.netflix.recipes.rss.RSSVersion;
 import com.netflix.recipes.rss.Subscriptions;
+import com.netflix.recipes.rss.SystemInfo;
 import com.netflix.recipes.rss.impl.CassandraStoreImpl;
 import com.netflix.recipes.rss.impl.InMemoryStoreImpl;
 import com.netflix.recipes.rss.impl.RSSImpl;
@@ -148,6 +150,7 @@ public class RSSManager implements HealthCheckHandler {
         RSS rssItems = null;
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         String FEATURE = "http://apache.org/xml/features/disallow-doctype-decl";
+		String hostname = SystemInfo.getHostname();
         try {
             dbf.setFeature(FEATURE, true);
             DocumentBuilder db = dbf.newDocumentBuilder();
@@ -165,7 +168,7 @@ public class RSSManager implements HealthCheckHandler {
                         items.add(new RSSItemImpl(el.getElementsByTagName("title").item(0).getTextContent(), el.getElementsByTagName("link").item(0).getTextContent(), el.getElementsByTagName("description").item(0).getTextContent()));
                     }
                 }
-                rssItems = new RSSImpl(url, title, items);
+                rssItems = new RSSImpl(url, title + " - " + hostname + " v" + RSSVersion.getVersion(), items);
                 
             } catch (SAXException e) {
                 logger.error("Exception occurred during parsing the RSS feed", e);
