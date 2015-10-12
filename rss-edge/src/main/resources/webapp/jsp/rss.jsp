@@ -16,6 +16,7 @@
  */
 %>
 <%@page import="com.netflix.hystrix.HystrixCommand"%>
+<%@page import="com.netflix.recipes.rss.RSSVersion"%>
 <%@page import="com.netflix.recipes.rss.SystemInfo"%>
 <%@page import="com.netflix.recipes.rss.hystrix.AddRSSCommand"%>
 <%@page import="com.netflix.recipes.rss.hystrix.DeleteRSSCommand"%>
@@ -191,6 +192,7 @@
 <hr>
 <footer align="center">
     <p>Netflix Inc. 2013</p>
+	<p>Edge version: <% out.println(RSSVersion.getVersion()); %></p>
 	<p>Edge hostname: <% out.println(SystemInfo.getHostname()); %></p>
 </footer>
 </div> <!-- /container -->
