@@ -1,38 +1,21 @@
 RSS Recipes
 ===========
 
-RSS is a Netflix Recipes application demonstrating how all of the following Netflix Open Source components can be tied together.
+RSS is a Netflix Recipes application demonstrating how Netflix Open Source components can be tied together.
 
-* [archaius] (https://github.com/Netflix/archaius)
-* [astyanax] (https://github.com/Netflix/astyanax)
-* [blitz4j] (https://github.com/Netflix/blitz4j)
-* [eureka] (https://github.com/Netflix/eureka)
-* [governator] (https://github.com/Netflix/governator)
-* [hystrix] (https://github.com/Netflix/hystrix)
-* [karyon] (https://github.com/Netflix/karyon)
-* [ribbon] (https://github.com/Netflix/ribbon)
-* [servo] (https://github.com/Netflix/servo)
+This is a modified version of the RSS Recipes to make it suitable for deploying on [Kubernetes](http://kubernetes.io/).
+For information regarding the original application by Netflix, please visit https://github.com/Netflix/recipes-rss.
 
-Modules
-=======
 
-rss-core
------------
-Shared classes between edge and middletier.
+Modifications
+=============
 
-rss-edge
------------
-Customer-facing edge service. The RSS Reader UI is hosted in this server.
-
-rss-middletier
------------------
-Internal middletier service responsible for fetching RSS feeds and for persisting user subscriptions.
-
-Documentation
---------------
-Please see [wiki] (https://github.com/Netflix/recipes-rss/wiki) for detailed documentation.
-
-Communication
---------------
-* Google Group: [netflix-oss-recipe] (https://groups.google.com/forum/#!forum/netflix-oss-recipe)
-* [GitHub Issues] (https://github.com/Netflix/recipes-rss/issues)
+* Eureka is not used in this setup as Kubernetes provides [Services](http://kubernetes.io/v1.0/docs/user-guide/services.html) which is an abstraction layer for service discovery and load balancing. Edge and middletier are configured to use this feature.
+* Middletier is configured to use cassandra by default
+* Edge and middletier are packaged as standalone jar files
+* Edge returns 500 to user if an error occurred internally
+* Version number and hostnames of edge and middletier are shown on the page for debugging purpose
+* Added multi-user support
+* Added healthcheck page
+* Upgraded netty to 4.0.26.Final
+* Upgraded jersey to 1.19
